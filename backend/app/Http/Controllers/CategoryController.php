@@ -6,6 +6,7 @@ use App\Http\Requests\Category\CreateCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Services\Category\CategoryService;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class CategoryController
@@ -75,11 +76,13 @@ class CategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return bool
+     * @return JsonResponse
      * @throws \Exception
      */
     public function destroy($id)
     {
-        return $this->service->delete($id);
+        return $this->service->delete($id) ?
+            response()->json(['message' => 'success']) :
+            response()->json(['message' => 'Please delete all related date']);
     }
 }
