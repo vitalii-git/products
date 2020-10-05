@@ -18,5 +18,21 @@ class Goods extends Model
      */
     protected $fillable = [
         'name',
+        'quantity',
+        'price',
+        'is_published',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(
+            Category::class,
+            'category_goods',
+            'goods_id',
+            'category_id'
+        );
+    }
 }

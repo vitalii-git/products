@@ -19,4 +19,17 @@ class Category extends Model
     protected $fillable = [
         'name',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function goods()
+    {
+        return $this->belongsToMany(
+            Goods::class,
+            'category_goods',
+            'category_id',
+            'goods_id'
+        );
+    }
 }

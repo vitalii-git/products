@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Goods;
 
 use App\Http\Requests\BaseFormRequest;
+use App\Models\Category;
 
 class UpdateGoodsRequest extends BaseFormRequest
 {
@@ -25,6 +26,11 @@ class UpdateGoodsRequest extends BaseFormRequest
     {
         return [
             'name' => 'required|string',
+            'quantity' => 'required|integer',
+            'price' => 'required|numeric',
+            'categories' => 'sometimes|required|array|distinct|min:2|max:10',
+            'categories.*' => 'sometimes|required|exists:' . Category::class . ',id',
+            'is_published' => 'sometimes|required|boolean',
         ];
     }
 }
