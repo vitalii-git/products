@@ -6,6 +6,7 @@ use App\Http\Requests\Goods\CreateGoodsRequest;
 use App\Http\Requests\Goods\UpdateGoodsRequest;
 use App\Http\Resources\GoodsResource;
 use App\Services\Goods\GoodsService;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
@@ -31,11 +32,12 @@ class GoodsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        return GoodsResource::collection($this->service->getAllPaginated());
+        return GoodsResource::collection($this->service->getAllPaginated($request->all()));
     }
 
     /**

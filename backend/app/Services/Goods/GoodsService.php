@@ -36,10 +36,10 @@ class GoodsService extends AbstractService
         $goods = parent::create($data);
 
         if (isset($data['categories']) && $data['categories']) {
-            $goods->sync($data['categories']);
+            $goods->categories()->sync($data['categories']);
         }
 
-        return $goods;
+        return $goods->loadMissing('categories');
     }
 
     /**
@@ -55,10 +55,10 @@ class GoodsService extends AbstractService
         $category = parent::update($keyOrModel, $data);
 
         if (isset($data['categories']) && $data['categories']) {
-            $goods->sync($data['categories']);
+            $goods->categories()->sync($data['categories']);
         }
 
-        return $category;
+        return $category->loadMissing('categories');
     }
 
 

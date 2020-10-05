@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+/**
+ * Trait Queryable
+ * @package App\Traits
+ */
 trait Queryable
 {
     /**
@@ -114,7 +118,13 @@ trait Queryable
      */
     protected function getFilteredQuery(array $search = []): Builder
     {
-        return $this->getQuery()->orderBy('id', 'desc');
+        $builder = $this->getQuery()->orderBy('id', 'desc');
+
+        if (!empty($search)) {
+            $this->withFilters($builder, $search);
+        }
+
+        return $builder;
     }
 
     /**
@@ -133,5 +143,18 @@ trait Queryable
         }
 
         return $query;
+    }
+
+    /**
+     * @param Builder $query
+     * @param array $search
+     */
+    protected function withFilters(Builder $query, array $search)
+    {
+        foreach ($search as $method => $parameter) {
+            if (method_exists($this->modelClass, 'scope' . ucfirst($method))) {
+                $query->$method($parameter);
+            }
+        }
     }
 }
