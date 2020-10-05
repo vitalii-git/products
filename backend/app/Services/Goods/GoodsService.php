@@ -20,6 +20,11 @@ class GoodsService extends AbstractService
     public $modelClass = Goods::class;
 
     /**
+     * @var string[]
+     */
+    protected $with = ['categories'];
+
+    /**
      * @param array $data
      * @return Model|null
      */

@@ -30,7 +30,7 @@ class Goods extends Model
     {
         return $this->belongsToMany(
             Category::class,
-            'category_goods',
+            'goods_categories',
             'goods_id',
             'category_id'
         );
